@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Where is - Share Location with DIGIPIN | India's Digital Address</title>
+    <meta name="description" content="Share and find locations using DIGIPIN - India Post's 10-character geocode. Get your location's DIGIPIN, decode any DIGIPIN, and share with QR codes.">
+    <meta name="keywords" content="DIGIPIN, location sharing, India Post, geocode, digital address, GPS, QR code, maps">
+    <meta name="author" content="Where is">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://where-is-digipin.netlify.app/">
+    <meta property="og:title" content="Where is - Share Location with DIGIPIN">
+    <meta property="og:description" content="Share locations using India Post's 10-character DIGIPIN geocode system.">
+    <meta property="og:image" content="./logo-where-is.jpeg">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Where is - Share Location with DIGIPIN">
+    <meta name="twitter:description" content="Share locations using India Post's 10-character DIGIPIN geocode system.">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#6D94C5">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="./logo-where-is.jpeg">
+    <link rel="apple-touch-icon" href="./logo-where-is.jpeg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="./styles.css">
+    
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Get Location Button -->
+        <button class="get-location-btn" id="getLocationBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="22" y1="12" x2="18" y2="12"/>
+                <line x1="6" y1="12" x2="2" y2="12"/>
+                <line x1="12" y1="6" x2="12" y2="2"/>
+                <line x1="12" y1="22" x2="12" y2="18"/>
+            </svg>
+            <span>Get My DIGIPIN</span>
+        </button>
+
+        <!-- Bento Grid -->
+        <div class="bento-grid">
+            <!-- Row 1: DIGIPIN (2 cols) + QR (1 col) + Coords (1 col) -->
+            <div class="bento-item bento-digipin">
+                <div class="bento-label">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    Your DIGIPIN
+                </div>
+                <div class="bento-content">
+                    <div class="digipin-display placeholder" id="digipinDisplay">
+                        Tap to get your DIGIPIN
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-item bento-qr">
+                <div class="qr-container" id="qrContainer">
+                    <div class="qr-placeholder"></div>
+                </div>
+            </div>
+
+            <div class="bento-item bento-coords">
+                <div class="coords-display" id="coordsDisplay">
+                    <div class="lat-lng">---, ---</div>
+                </div>
+            </div>
+
+            <!-- Row 2-3: Map (2 cols, 2 rows) + Actions (2 cols, 2 rows) -->
+            <div class="bento-item bento-map">
+                <div class="map-container" id="mapContainer">
+                    <div class="map-placeholder"></div>
+                </div>
+            </div>
+
+            <div class="bento-item bento-actions">
+                <div class="bento-label">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                    Quick Actions
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn" id="copyBtn" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        <span>Copy DIGIPIN</span>
+                    </button>
+                    <button class="action-btn" id="shareBtn" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                        <span>Share DIGIPIN</span>
+                    </button>
+                    <button class="action-btn" id="openMapBtn" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        <span>Open in Maps</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Row 4: Decode (2 cols) + Logo (1 col) + Links (1 col) -->
+            <div class="bento-item bento-decode">
+                <div class="bento-label">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Decode / Encode
+                </div>
+                <div class="decode-section">
+                    <input type="text" class="decode-input" id="decodeInput" placeholder="Enter DIGIPIN" maxlength="14">
+                    <div class="or-divider">or</div>
+                    <input type="text" class="coords-input" id="coordsInput" placeholder="Lat, Lng (e.g., 21.1861, 81.3071)">
+                    <button class="decode-btn" id="decodeBtn">Locate</button>
+                </div>
+            </div>
+
+            <div class="bento-item bento-logo">
+                <img src="./logo-where-is.jpeg" alt="Where is" class="logo-image">
+            </div>
+
+            <div class="bento-item bento-share">
+                <div class="links-grid">
+                    <button class="link-btn" id="shareAppBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                        <span>Share</span>
+                    </button>
+                    <a class="link-btn" href="https://github.com/aryansrao/where-is" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                        <span>GitHub</span>
+                    </a>
+                    <a class="link-btn" href="https://aryansrao.github.io" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        <span>Contribute</span>
+                    </a>
+                    <a class="link-btn" href="https://aryansrao.github.io" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        <span>Developer</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Powered by <a href="https://github.com/INDIAPOST-gov/digipin" target="_blank">India Post DIGIPIN</a></p>
+        </footer>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- App Script -->
+    <script src="./scripts.js"></script>
+</body>
+</html>
