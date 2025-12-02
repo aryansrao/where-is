@@ -192,8 +192,8 @@ function generateQR(digipin, coords) {
     const qrData = `https://where-is-digipin.netlify.app/?digipin=${digipinClean}`;
     
     const qrCode = new QRCodeStyling({
-        width: 160,
-        height: 160,
+        width: 140,
+        height: 140,
         type: "svg",
         data: qrData,
         dotsOptions: {
@@ -538,8 +538,8 @@ function initializeDefaults() {
     elements.qrContainer.innerHTML = '';
     
     const qrCode = new QRCodeStyling({
-        width: 160,
-        height: 160,
+        width: 140,
+        height: 140,
         type: "svg",
         data: 'https://where-is-digipin.netlify.app/',
         dotsOptions: {
