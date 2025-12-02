@@ -186,7 +186,9 @@ function updateUI(digipin, coords) {
 function generateQR(digipin, coords) {
     elements.qrContainer.innerHTML = '';
     
-    const qrData = `https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`;
+    // Generate URL with DIGIPIN parameter (remove dashes for cleaner URL)
+    const digipinClean = digipin.replace(/-/g, '');
+    const qrData = `https://where-is-digipin.netlify.app/?digipin=${digipinClean}`;
     
     new QRCode(elements.qrContainer, {
         text: qrData,
