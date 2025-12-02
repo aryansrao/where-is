@@ -137,6 +137,7 @@ function formatDigipin(pin) {
 
 let currentDigipin = null;
 let currentCoords = null;
+let currentQRCode = null;
 
 const elements = {
     getLocationBtn: document.getElementById('getLocationBtn'),
@@ -238,6 +239,22 @@ function generateQR(digipin, coords) {
     });
     
     qrCode.append(elements.qrContainer);
+    currentQRCode = qrCode;
+    
+    // Add click handler to download QR code
+    elements.qrContainer.style.cursor = 'pointer';
+    elements.qrContainer.onclick = () => downloadQRCode(digipinClean);
+}
+
+// Download QR code as PNG
+function downloadQRCode(digipin) {
+    if (!currentQRCode) return;
+    
+    currentQRCode.download({
+        name: `digipin-${digipin || 'qrcode'}`,
+        extension: 'png'
+    });
+    showToast('QR Code downloaded!');
 }
 
 function updateMap(lat, lon) {
@@ -568,6 +585,11 @@ function initializeDefaults() {
     });
     
     qrCode.append(elements.qrContainer);
+    currentQRCode = qrCode;
+    
+    // Add click handler to download QR code
+    elements.qrContainer.style.cursor = 'pointer';
+    elements.qrContainer.onclick = () => downloadQRCode('where-is');
 
     // Show default map (India center)
     const defaultLat = 20.5937;

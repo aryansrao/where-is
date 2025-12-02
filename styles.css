@@ -228,6 +228,16 @@ body {
     height: 100%;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.qr-container:hover {
+    transform: scale(1.02);
+}
+
+.qr-container:active {
+    transform: scale(0.98);
 }
 
 .qr-container canvas,
