@@ -190,14 +190,54 @@ function generateQR(digipin, coords) {
     const digipinClean = digipin.replace(/-/g, '');
     const qrData = `https://where-is-digipin.netlify.app/?digipin=${digipinClean}`;
     
-    new QRCode(elements.qrContainer, {
-        text: qrData,
-        width: 200,
-        height: 200,
-        colorDark: "#2d3748",
-        colorLight: "#F5EFE6",
-        correctLevel: QRCode.CorrectLevel.M
+    const qrCode = new QRCodeStyling({
+        width: 160,
+        height: 160,
+        type: "svg",
+        data: qrData,
+        dotsOptions: {
+            type: "rounded",
+            gradient: {
+                type: "linear",
+                rotation: 45,
+                colorStops: [
+                    { offset: 0, color: "#0ea5e9" },
+                    { offset: 1, color: "#1e3a8a" }
+                ]
+            }
+        },
+        cornersSquareOptions: {
+            type: "square",
+            gradient: {
+                type: "linear",
+                rotation: 45,
+                colorStops: [
+                    { offset: 0, color: "#38bdf8" },
+                    { offset: 1, color: "#1e40af" }
+                ]
+            }
+        },
+        cornersDotOptions: {
+            type: "square",
+            gradient: {
+                type: "linear",
+                rotation: 45,
+                colorStops: [
+                    { offset: 0, color: "#0ea5e9" },
+                    { offset: 1, color: "#1e3a8a" }
+                ]
+            }
+        },
+        backgroundOptions: {
+            color: "transparent"
+        },
+        imageOptions: {
+            crossOrigin: "anonymous",
+            margin: 4
+        }
     });
+    
+    qrCode.append(elements.qrContainer);
 }
 
 function updateMap(lat, lon) {
@@ -479,14 +519,55 @@ function handleURLParams() {
 function initializeDefaults() {
     // Generate default QR code with website URL
     elements.qrContainer.innerHTML = '';
-    new QRCode(elements.qrContainer, {
-        text: 'https://where-is-digipin.netlify.app/',
-        width: 200,
-        height: 200,
-        colorDark: "#2d3748",
-        colorLight: "#F5EFE6",
-        correctLevel: QRCode.CorrectLevel.M
+    
+    const qrCode = new QRCodeStyling({
+        width: 160,
+        height: 160,
+        type: "svg",
+        data: 'https://where-is-digipin.netlify.app/',
+        dotsOptions: {
+            type: "rounded",
+            gradient: {
+                type: "linear",
+                rotation: 45,
+                colorStops: [
+                    { offset: 0, color: "#0ea5e9" },
+                    { offset: 1, color: "#1e3a8a" }
+                ]
+            }
+        },
+        cornersSquareOptions: {
+            type: "square",
+            gradient: {
+                type: "linear",
+                rotation: 45,
+                colorStops: [
+                    { offset: 0, color: "#38bdf8" },
+                    { offset: 1, color: "#1e40af" }
+                ]
+            }
+        },
+        cornersDotOptions: {
+            type: "square",
+            gradient: {
+                type: "linear",
+                rotation: 45,
+                colorStops: [
+                    { offset: 0, color: "#0ea5e9" },
+                    { offset: 1, color: "#1e3a8a" }
+                ]
+            }
+        },
+        backgroundOptions: {
+            color: "transparent"
+        },
+        imageOptions: {
+            crossOrigin: "anonymous",
+            margin: 4
+        }
     });
+    
+    qrCode.append(elements.qrContainer);
 
     // Show default map (India center)
     const defaultLat = 20.5937;
