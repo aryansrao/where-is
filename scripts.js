@@ -201,9 +201,26 @@ function generateQR(digipin, coords) {
 function updateMap(lat, lon) {
     const latNum = parseFloat(lat);
     const lonNum = parseFloat(lon);
-    const bbox = `${(lonNum - 0.005).toFixed(6)},${(latNum - 0.005).toFixed(6)},${(lonNum + 0.005).toFixed(6)},${(latNum + 0.005).toFixed(6)}`;
-    const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${latNum},${lonNum}`;
-    elements.mapContainer.innerHTML = `<iframe src="${mapUrl}" loading="lazy"></iframe>`;
+    
+    // Clear existing map
+    elements.mapContainer.innerHTML = '<div id="map" style="width:100%;height:100%;"></div>';
+    
+    // Create Leaflet map with CartoDB Voyager tiles (beautiful, free)
+    const map = L.map('map', {
+        zoomControl: false,
+        attributionControl: false
+    }).setView([latNum, lonNum], 16);
+    
+    // CartoDB Voyager - clean, modern look
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19
+    }).addTo(map);
+    
+    // Add marker
+    L.marker([latNum, lonNum]).addTo(map);
+    
+    // Store map reference for cleanup
+    window.currentMap = map;
 }
 
 function showToast(message) {
@@ -472,9 +489,19 @@ function initializeDefaults() {
     // Show default map (India center)
     const defaultLat = 20.5937;
     const defaultLon = 78.9629;
-    const bbox = `${(defaultLon - 5).toFixed(6)},${(defaultLat - 5).toFixed(6)},${(defaultLon + 5).toFixed(6)},${(defaultLat + 5).toFixed(6)}`;
-    const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik`;
-    elements.mapContainer.innerHTML = `<iframe src="${mapUrl}" loading="lazy"></iframe>`;
+    
+    elements.mapContainer.innerHTML = '<div id="map" style="width:100%;height:100%;"></div>';
+    
+    const map = L.map('map', {
+        zoomControl: false,
+        attributionControl: false
+    }).setView([defaultLat, defaultLon], 4);
+    
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19
+    }).addTo(map);
+    
+    window.currentMap = map;
 }
 
 // Initialize
